@@ -3,20 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cover Snap</title>
+<title>Sunset Strip — GTA-style Cover Maker</title>
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <main class="app">
-  <section class="controls">
-    <h1>Cover Snap</h1>
-    <p>A photo and a caption, made into a square cover.</p>
-    <label>Photo <input id="photo" type="file" accept="image/*"></label>
-    <label>Caption <input id="caption" type="text" maxlength="40" value="Sunset Heist"></label>
-    <button id="export" type="button">Export PNG 1080 x 1080</button>
-    <p id="status" role="status"></p>
+  <section class="controls" aria-label="Cover editor controls">
+    <h1>Sunset Strip</h1>
+    <p class="tagline">Four panels, one sunset story. Drop in a photo, write a caption, export the cover.</p>
+
+    <fieldset>
+      <legend>Photo</legend>
+      <label class="file-label">Choose a photo
+        <input id="photo" type="file" accept="image/*">
+      </label>
+      <p class="hint">Or drag a photo onto the preview. It fills the selected panel.</p>
+      <div class="panel-pick" role="group" aria-label="Pick a panel">
+        <button type="button" class="panel-btn" data-panel="0">Panel 1</button>
+        <button type="button" class="panel-btn" data-panel="1">Panel 2</button>
+        <button type="button" class="panel-btn" data-panel="2">Panel 3</button>
+        <button type="button" class="panel-btn" data-panel="3">Panel 4</button>
+      </div>
+      <label>Zoom <span id="zoomValue">100%</span>
+        <input id="zoom" type="range" min="100" max="300" value="100">
+      </label>
+      <label>Pan <span class="hint">drag the photo inside the preview</span></label>
+      <button id="fillAll" type="button">Fill all four panels with this photo</button>
+      <button id="clearPanel" type="button" class="ghost">Clear selected panel</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>Caption</legend>
+      <label>Text
+        <input id="caption" type="text" maxlength="40" value="Sunset Strip">
+      </label>
+      <label>Size <span id="sizeValue">100%</span>
+        <input id="capSize" type="range" min="50" max="160" value="100">
+      </label>
+      <label>Colour
+        <input id="capColor" type="color" value="#ff2e88">
+      </label>
+      <label class="check"><input id="capOutline" type="checkbox" checked> White sticker outline</label>
+      <label class="check"><input id="capShadow" type="checkbox" checked> Drop shadow</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Export PNG</legend>
+      <div class="exports">
+        <button id="exportSquare" type="button">1080 &times; 1080</button>
+        <button id="exportPortrait" type="button">1080 &times; 1350</button>
+        <button id="exportWide" type="button">1920 &times; 1080</button>
+      </div>
+      <p id="status" role="status"></p>
+    </fieldset>
   </section>
-  <canvas id="cover" width="1080" height="1080" aria-label="The cover"></canvas>
+
+  <section class="stage" aria-label="Live cover preview">
+    <div id="dropzone" class="dropzone">
+      <canvas id="cover" width="1080" height="1080" aria-label="The cover preview"></canvas>
+      <p class="drop-hint">Drop a photo here</p>
+    </div>
+  </section>
 </main>
 <script type="module" src="./src/main.js"></script>
 </body>
